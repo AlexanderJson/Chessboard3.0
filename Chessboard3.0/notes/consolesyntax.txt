@@ -1,0 +1,46 @@
+
+DESIGN
+
+Console.ForegroundColor = ConsoleColor.Cyan;
+Console.BackgroundColor = ConsoleColor.DarkBlue;
+Console.ResetColor();
+
+FÄRGER:
+Black, DarkBlue, DarkGreen, DarkCyan, DarkRed, DarkMagenta,
+DarkYellow, Gray, DarkGray, Blue, Green, Cyan, Red, Magenta, Yellow, White
+
+
+KONTROLL
+Console.SetCursorPosition(0, 5);
+ConsoleKey key = Console.ReadKey(true).Key;
+Console.Clear();
+
+
+LJUD
+Console.Beep(800, 200);
+
+FÖNSTER
+Console.WindowWidth = 100;
+Console.WindowHeight = 100;
+
+Console.BufferWidth = 120;
+Console.BufferHeight = 300;
+
+
+
+
+
+
+
+
+
+I/O
+
+ENKEL INLÄSNING
+string name = Console.ReadLine(); 
+
+LÄSER IN UTAN ATT SKICKA
+ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+
+
+ConsoleKey key = keyInfo.Key; 
