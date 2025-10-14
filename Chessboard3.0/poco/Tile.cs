@@ -13,10 +13,7 @@ namespace Chessboard3._0.poco
 
         public (int x, int y) LegalMoves { get; set; }
 
-        public void LegalMoveRules(int x, int y)
-        {
-            Dictionary<>
-        }
+
     }
 
 
