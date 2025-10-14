@@ -8,11 +8,11 @@ namespace Chessboard3._0.poco
 {
     public class Tile
     {
-        public int Value { get; set; }
+        public long id { get; set; }
+        public int position { get; set; }
         public string ChessSymbol { get; set; } = string.Empty;
 
-        public (int x, int y) LegalMoves { get; set; }
-
+       
 
     }
 

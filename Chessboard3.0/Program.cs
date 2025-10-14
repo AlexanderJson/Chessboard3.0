@@ -1,18 +1,20 @@
 ﻿using Chessboard3._0.poco;
 using System;
 using System.Data.Common;
-
+using System.Security.Cryptography;
 namespace Chessboard3._0
 {
     internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
 
             // UTF8 är standard encoding, tillåter svenska karaktär, emojis etc
             Console.CursorVisible = false;
 
             Console.OutputEncoding = System.Text.Encoding.UTF8;
+            var king = "♔";
+
 
             var wtower = 8;
             var wpawn = 1;
@@ -20,15 +22,21 @@ namespace Chessboard3._0
             var bpawn = -1;
             // int[,] board = new int[8, 8];
 
-            int[,] board = new int[8, 8];
+            //int[,] board = new int[8, 8];
+            Tile[,] board = new Tile[8, 8];
 
             int horizontalMove = 0;
             var whitetowerX = 0;
             var whitetowerY = 7;
-            board[7, 0] = wtower;
-            board[0, 0] = btower;
-            board[1, 0] = bpawn;
+
             bool ingame = false;
+
+
+
+            Tile[] whites = new Tile[16]
+            Tile[] blacks = new Tile[16];
+
+
 
 
 
@@ -39,31 +47,39 @@ namespace Chessboard3._0
 
 
             string choice = Console.ReadLine();
-            if( choice.Equals("1")) ingame = true;
+            if (choice.Equals("1")) ingame = true;
             if (choice.Equals("2")) ingame = false;
 
             int y = 7;
             int x = 0;
+            var newBoard = createBoard();
 
             while (ingame)
             {
+                Console.CursorVisible = false;
+
                 Console.Clear();
-                for (int row = 0; row < board.GetLength(0); row++)
+                for (int row = 0; row < newBoard.GetLength(0); row++)
                 {
-                    for (int col = 0; col < board.GetLength(1); col++)
+                    for (int col = 0; col < newBoard.GetLength(1); col++)
                     {
-                        if (row == y && col == x)
+                        if (row == y && col == x) // även om inga möjliga drag= är röd
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
-                            //Console.WriteLine("♟️");
                         }
                         else
                         {
                             Console.ForegroundColor = ConsoleColor.White;
                         }
-                        Console.CursorVisible = false;
 
-                        Console.Write($"{board[row, col],4}");
+                        if (board[col, row] != null)
+                        {
+                            board[col, row].ChessSymbol = "♙";
+                            Console.Write($"{board[col, row].ChessSymbol} ");
+                        }
+
+                        else
+                            Console.Write(".");
                     }
                     Console.WriteLine();
                 }
@@ -82,6 +98,61 @@ namespace Chessboard3._0
                 else if (key.Key == ConsoleKey.Spacebar)
                     Console.WriteLine("SPACE!");
             }
+        }
+
+
+
+
+
+            static Tile[] generatePieces(int amount)
+            {
+                var pieceID = BitConverter.ToInt64(Guid.NewGuid().ToByteArray(), 0);
+                Tile[] pieces = new Tile[amount];
+                for (int i = 0; i < amount; i++)
+                {
+                    pieces[i] = new Tile
+                    {
+                        position = i,
+                        id = pieceID,
+                        ChessSymbol = "♙"
+
+                    };
+                    Console.WriteLine(pieces[i].id);
+                }
+                return pieces;
+            }
+
+
+            static Tile[,] createBoard()
+            {
+                var pieceID = BitConverter.ToInt64(Guid.NewGuid().ToByteArray(), 0);
+                Tile[,] board = new Tile[8, 8];
+                Tile[] pawns = new Tile[8];
+                pawns = generatePieces(8);
+
+
+                for (int col = 0; col < board.GetLength(0); col++)
+                {
+                    board[col, 6] = pawns[col];
+                }
+
+                for (int row = 0; row < board.GetLength(1); row++)
+                {
+                    for (int col = 0; col < board.GetLength(0); col++)
+                    {
+                        if (board[col, row] != null)
+                            Console.Write($"{board[col, row].ChessSymbol} ");
+                        else
+                            Console.Write("· ");
+                    }
+                    Console.WriteLine();
+                }
+                return board;
+            }
+
+        }
+    }
+
 
 
 
@@ -100,7 +171,7 @@ namespace Chessboard3._0
 
 
 
-
+            /*
 
             bool stopPrinting = false;
             for (int row = 7; row >= 0; row--)
@@ -183,7 +254,10 @@ static void movementRules()
     board[1, 0] = btower;
     board[0, 0] = btower;
 
-    int horizontalMove = 0;
+
+
+
+            int horizontalMove = 0;
     for (int row = 0; row < board.GetLength(0); row++)
     {
         Console.WriteLine(board[row, horizontalMove]);
