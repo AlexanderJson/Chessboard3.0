@@ -1,0 +1,12 @@
+﻿klar. Skapa ett nytt projekt i Visual Studio (Console Application → C# → .NET 8).
+klar. Namge tydligt
+3. Program ska ha scanner, ta in input för brädans storlekt, validering och flesökning (range 3-50)
+4. svart ruta = ◼︎ och vit ruta = ◻︎ ör varannan
+5. två metoder (readsize för validering och hantering av storleksinmatning) + (render board - tar in inmatning)
+
+
+Plan:
+
+* skapa två klasser, en för bräda en för pjäs
+* skapa metod för storleksinmatning
+* skapa metod för placering av pjäs
