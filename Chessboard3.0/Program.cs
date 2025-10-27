@@ -1,10 +1,29 @@
-﻿namespace Chessboard3._0
+﻿using Chessboard3._0.poco;
+using System;
+using System.Data.Common;
+using System.Security.Cryptography;
+namespace Chessboard3._0
 {
-    internal class Program
+    public class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+
+            BoardView view = new BoardView();
+
+            int input = view.ReadInput(Board.min, Board.max);
+
+            Board board = new Board(input);
+
+            BoardView.printBoard(board);
+
+
+
         }
+
+
+
     }
 }
+
+          
